@@ -1,6 +1,6 @@
 # Playground
 A project with a few things I'd like to improve, such as a background parallax effect, a sticky header, a slider, a drag-and-drop area, an FAQ section, a liquid glass effect, and a theme switcher.
-- Background parallax effect:
+- Background parallax effect
   - Background-attachment=”fixed”
   - Image blur and scrolling when moving the cursor along the edges
 - Sticky positioning of the top menu (Header)
