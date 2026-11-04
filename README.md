@@ -1,0 +1,32 @@
+# Playground
+A project with a few things I'd like to improve, such as a background parallax effect, a sticky header, a slider, a drag-and-drop area, an FAQ section, a liquid glass effect, and a theme switcher.
+- Background parallax effect
+  - Background-attachment=”fixed”
+  - Image blur and scrolling when moving the cursor along the edges
+- Sticky positioning of the top menu (Header)
+  - When scrolling down by a few pixels, the menu disappears if it was visible
+  - When scrolling up by a few pixels, the menu appears if it was hidden
+- Slider
+  - Horizontal and vertical
+  - Finite and cyclic
+- Drag and drop area
+  - An 10x10 aria of slots into which you can insert cells
+  - A cell can has its own color
+  - A slot may have its own color, or it may not
+  - If a slot doesn't have its own color, then a cell of any color can be placed in it.
+    If a slot has its own color, then only a cell of that specific color can be placed in it
+- FAQ
+  - It has two states: opened and closed
+  - While state is 'closed', the block displays only the header - the question and a downward-pointing SVG arrow - indicating that the block can be opened
+  - While state is 'opened', the block displays the header - the question, description - the answer on the question and a upward-pointing SVG arrow - indicating that the block can be closed
+  - The header and the SVG arrow are positioned at the same vertical level (within the same div), while the description will be separate and located below.
+  - A FAQ block opens and closes smoothly
+- Liquid glass effect
+  - While the menu is open, the background will be inactive (no scrolling, no interactivity)
+  - The menu has liquid glass effect: opacity:0.9, filter: blur(...px) and glares on the edges (for example, using border)
+  - Also the menu have inputs, buttons, ranges and switcher
+  - The range dims at low values
+  - The switcher lights up when turned on and fades out gradually when turned off
+- Theme changing
+  - Playground has light and dark modes
+  - The defauld theme should depends on browser settings
