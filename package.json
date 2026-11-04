@@ -1,0 +1,46 @@
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "description": "A project with a few things I'd like to implement and improve",
+  "keywords": [
+    "parallax",
+    "sticky header",
+    "slider",
+    "drag and drop",
+    "FAQ",
+    "liquid glass effect",
+    "theme changing"
+  ],
+  "license": "ISC",
+  "author": "Chpumba (iliDmytro555)",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "webpack server"
+  },
+  "dependencies": {
+    "@babel/core": "^7.29.7",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.29.7",
+    "@babel/preset-react": "^7.29.7",
+    "@babel/preset-typescript": "^7.29.7",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "babel-loader": "^10.1.1",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^7.1.5",
+    "html-webpack-plugin": "^5.6.8",
+    "mini-css-extract-plugin": "^2.10.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "sass": "^1.107.1",
+    "sass-loader": "^17.1.0",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.6.2",
+    "typescript": "^7.0.2",
+    "webpack": "^5.112.2",
+    "webpack-cli": "^7.3.1",
+    "webpack-dev-server": "^5.2.7"
+  }
+}
