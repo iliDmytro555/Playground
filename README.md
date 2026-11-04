@@ -24,4 +24,9 @@ A project with a few things I'd like to improve, such as a background parallax e
 - Liquid glass effect
   - While the menu is open, the background will be inactive (no scrolling, no interactivity)
   - The menu has liquid glass effect: opacity:0.9, filter: blur(...px) and glares on the edges (for example, using border)
-  - Alse the menu shoud have inputs, buttons, ranges, switcher... 
+  - Also the menu have inputs, buttons, ranges and switcher
+  - The range dims at low values
+  - The switcher lights up when turned on and fades out gradually when turned off
+- Theme changing
+  - Playground has light and dark modes
+  - The defauld theme should depends on browser settings
