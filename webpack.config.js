@@ -23,11 +23,23 @@ module.exports = {
     rules: [
       {
         test: /\.s?[ac]ss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                auto: /\.module\.s[ac]ss$/i,
+                namedExport: false,
+              },
+            },
+          },
+          "sass-loader",
+        ],
       },
       {
-        test: /\.(png|webp|jpg|svg|gif)$/,
-        use: "asset/resource",
+        test: /\.(png|webp|jpg|svg|gif|ttf)$/,
+        type: "asset/resource",
       },
       {
         test: /\.js$/,

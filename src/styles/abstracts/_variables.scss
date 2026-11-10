@@ -1,0 +1,52 @@
+@use "./colors" as colors;
+@use "./typography" as typography;
+
+//Background
+$color-background-dark: colors.$neutral-900;
+$color-background-light: colors.$neutral-25;
+
+//Modal
+$color-modal: colors.$indigo-700;
+$color-modal-disabled: colors.$indigo-50;
+
+//Border
+$color-border: colors.$neutral-600;
+
+//Text
+$color-text-primary: colors.$neutral-50;
+$color-text-secondary: colors.$neutral-100;
+$color-text-tertiary: colors.$neutral-200;
+
+//Button
+
+//Button Background
+$color-button-primary-background: colors.$lilac-300;
+$color-button-primary-background-hover: colors.$lilac-500;
+$color-button-primary-background-active: colors.$lilac-700;
+$color-button-primary-background-disabled: colors.$lilac-50;
+
+$color-button-secondary-background: colors.$indigo-300;
+$color-button-secondary-background-hover: colors.$indigo-500;
+$color-button-secondary-background-active: colors.$indigo-700;
+$color-button-secondary-background-disabled: colors.$indigo-50;
+
+//Button Text
+
+$color-button-primary-text: colors.$lilac-300;
+$color-button-primary-text-hover: colors.$lilac-500;
+$color-button-primary-text-active: colors.$lilac-700;
+$color-button-primary-text-disabled: colors.$lilac-50;
+
+$color-button-secondary-text: colors.$indigo-300;
+$color-button-secondary-text-hover: colors.$indigo-500;
+$color-button-secondary-text-active: colors.$indigo-700;
+$color-button-secondary-text-disabled: colors.$indigo-50;
+
+//Field
+
+$color-field: colors.$indigo-300;
+$color-field-hover: colors.$indigo-500;
+$color-field-active: colors.$indigo-700;
+$color-field-disabled: colors.$indigo-50;
+
+//Створи жовтий колір для світчера світлої теми та синій для темної

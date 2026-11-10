@@ -1,0 +1,41 @@
+@use "sass:map";
+@use "../abstracts//variables" as var;
+@use "../abstracts//typography" as typography;
+@use "../abstracts/fonts" as fonts;
+
+$largeFontSizeList: (
+  2: typography.$font-size-4xl,
+  3: typography.$font-size-3xl,
+  4: typography.$font-size-2xl,
+  5: typography.$font-size-xl,
+  6: typography.$font-size-lg,
+);
+
+body {
+  background-color: var.$color-background-dark;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "JosefinSans";
+}
+
+h1 {
+  color: var.$color-text-primary;
+  font-size: typography.$font-size-5xl;
+  font-weight: 700;
+}
+
+@for $i from 2 through 6 {
+  h#{$i} {
+    color: var.$color-text-secondary;
+    font-size: map.get($largeFontSizeList, $i);
+    font-weight: 600;
+  }
+}
+p {
+  color: var.$color-text-secondary;
+  font-size: typography.$font-size-md;
+  font-weight: 300;
+}
