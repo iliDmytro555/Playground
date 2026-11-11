@@ -1,0 +1,207 @@
+@use "sass:list";
+@use "../../styles/abstracts/colors" as var;
+@use "../../styles//abstracts//colors" as colors;
+@use "../../styles/abstracts/typography" as typography;
+
+$lilacList: (
+  colors.$lilac-50,
+  colors.$lilac-100,
+  colors.$lilac-300,
+  colors.$lilac-500,
+  colors.$lilac-700,
+  colors.$lilac-900
+);
+
+$indigoList: (
+  colors.$indigo-50,
+  colors.$indigo-100,
+  colors.$indigo-300,
+  colors.$indigo-500,
+  colors.$indigo-700,
+  colors.$indigo-900
+);
+
+$amberList: (
+  colors.$amber-50,
+  colors.$amber-100,
+  colors.$amber-200,
+  colors.$amber-300,
+  colors.$amber-400,
+  colors.$amber-500
+);
+
+$cyanList: (
+  colors.$cyan-100,
+  colors.$cyan-200,
+  colors.$cyan-300,
+  colors.$cyan-400,
+  colors.$cyan-500,
+  colors.$cyan-700
+);
+
+$redList: (colors.$red-100, colors.$red-200, colors.$red-400);
+
+$greenList: (colors.$green-100, colors.$green-200, colors.$green-400);
+
+$blueList: (colors.$blue-100, colors.$blue-200, colors.$blue-400);
+
+$yellowList: (colors.$yellow-100, colors.$yellow-200, colors.$yellow-400);
+
+$neutralList: (
+  colors.$neutral-25,
+  colors.$neutral-50,
+  colors.$neutral-100,
+  colors.$neutral-200,
+  colors.$neutral-300,
+  colors.$neutral-400,
+  colors.$neutral-500,
+  colors.$neutral-600,
+  colors.$neutral-700,
+  colors.$neutral-800,
+  colors.$neutral-900
+);
+
+$sizeList: (
+  typography.$font-size-3xs,
+  typography.$font-size-2xs,
+  typography.$font-size-xs,
+  typography.$font-size-sm,
+  typography.$font-size-md,
+  typography.$font-size-lg,
+  typography.$font-size-xl,
+  typography.$font-size-2xl,
+  typography.$font-size-3xl,
+  typography.$font-size-4xl,
+  typography.$font-size-5xl
+);
+
+$weightList: (
+  typography.$font-weight-thin,
+  typography.$font-weight-extraLight,
+  typography.$font-weight-light,
+  typography.$font-weight-regular,
+  typography.$font-weight-medium,
+  typography.$font-weight-semiBold,
+  typography.$font-weight-bold
+);
+
+$heightList: (
+  typography.$line-height-extraTight,
+  typography.$line-height-tight,
+  typography.$line-height-regular,
+  typography.$line-height-medium,
+  typography.$line-height-wide,
+  typography.$line-height-extraWide
+);
+
+$spacingList: (
+  typography.$spacing-1,
+  typography.$spacing-2,
+  typography.$spacing-3,
+  typography.$spacing-4,
+  typography.$spacing-5,
+  typography.$spacing-6,
+  typography.$spacing-7,
+  typography.$spacing-8,
+  typography.$spacing-9,
+  typography.$spacing-10,
+  typography.$spacing-11,
+  typography.$spacing-12,
+  typography.$spacing-13
+);
+
+.lilacBlock,
+.indigoBlock,
+.amberBlock,
+.cyanBlock,
+.redBlock,
+.greenBlock,
+.blueBlock,
+.yellowBlock,
+.neutralBlock {
+  div {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    margin: 10px;
+  }
+}
+
+.spacingBlock {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background-color: red;
+}
+
+//Colors
+@for $i from 1 through 6 {
+  .lilac_#{$i} {
+    background-color: list.nth($lilacList, $i);
+  }
+
+  .indigo_#{$i} {
+    background-color: list.nth($indigoList, $i);
+  }
+
+  .amber_#{$i} {
+    background-color: list.nth($amberList, $i);
+  }
+
+  .cyan_#{$i} {
+    background-color: list.nth($cyanList, $i);
+  }
+}
+
+@for $i from 1 through 3 {
+  .red_#{$i} {
+    background-color: list.nth($redList, $i);
+  }
+
+  .green_#{$i} {
+    background-color: list.nth($greenList, $i);
+  }
+
+  .blue_#{$i} {
+    background-color: list.nth($blueList, $i);
+  }
+
+  .yellow_#{$i} {
+    background-color: list.nth($yellowList, $i);
+  }
+}
+
+@for $i from 1 through 11 {
+  .neutral_#{$i} {
+    background-color: list.nth($neutralList, $i);
+  }
+}
+
+//Sizes
+@for $i from 1 through 11 {
+  .size_#{$i} {
+    font-size: list.nth($sizeList, $i);
+  }
+}
+
+//Weights
+@for $i from 1 through 7 {
+  .weight_#{$i} {
+    font-weight: list.nth($weightList, $i);
+  }
+}
+
+//Line-heights
+@for $i from 1 through 6 {
+  .height_#{$i} {
+    line-height: list.nth($heightList, $i);
+  }
+}
+
+//Spacings
+@for $i from 1 through 13 {
+  .spacing_#{$i} {
+    margin: list.nth($spacingList, $i);
+  }
+}
