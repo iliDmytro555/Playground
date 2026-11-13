@@ -11,7 +11,8 @@ $largeFontSizeList: (
   6: typography.$font-size-lg,
 );
 
-body {
+:root {
+  scrollbar-width: none;
   background-color: var.$color-background-dark;
 }
 
@@ -22,20 +23,20 @@ body {
 }
 
 h1 {
-  color: var.$color-text-primary;
+  color: var.$color-text-primary-dark;
   font-size: typography.$font-size-5xl;
   font-weight: 700;
 }
 
 @for $i from 2 through 6 {
   h#{$i} {
-    color: var.$color-text-secondary;
+    color: var.$color-text-secondary-dark;
     font-size: map.get($largeFontSizeList, $i);
     font-weight: 600;
   }
 }
 p {
-  color: var.$color-text-secondary;
+  color: var.$color-text-secondary-dark;
   font-size: typography.$font-size-md;
-  font-weight: 300;
+  font-weight: 400;
 }

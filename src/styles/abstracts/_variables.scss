@@ -1,6 +1,5 @@
 @use "./colors" as colors;
 @use "./typography" as typography;
-@use "./fonts" as fonts;
 
 //Background
 $color-background-dark: colors.$neutral-900;
@@ -14,9 +13,13 @@ $color-modal-disabled: colors.$indigo-50;
 $color-border: colors.$neutral-600;
 
 //Text
-$color-text-primary: colors.$neutral-50;
-$color-text-secondary: colors.$neutral-100;
-$color-text-tertiary: colors.$neutral-200;
+$color-text-primary-dark: colors.$neutral-50;
+$color-text-secondary-dark: colors.$neutral-100;
+$color-text-tertiary-dark: colors.$neutral-200;
+
+$color-text-primary-light: colors.$neutral-900;
+$color-text-secondary-light: colors.$neutral-800;
+$color-text-tertiary-light: colors.$neutral-700;
 
 //Button
 
