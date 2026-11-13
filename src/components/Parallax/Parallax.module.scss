@@ -8,23 +8,34 @@
 }
 
 .parallax {
+  position: relative;
   justify-self: center;
   align-self: center;
   display: grid;
   overflow: hidden;
 
+  .parallax__background,
+  .parallax__middleground,
+  .parallax__frontground {
+    position: absolute;
+  }
+
   .parallax__background {
-    background-image: url("../../asset/resource/images/parallaxBackground2.jpg");
+    background-image: url("../../asset/resource/images/parallaxBackground.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
   }
 
+  .parallax__middleground {
+    filter: brightness(0.5);
+  }
+
   .parallax__title,
   .parallax__description {
-    position: relative;
+    width: 100%;
+    position: absolute;
     text-align: center;
-    // text-shadow: 0px 10px 50px colors.$amber-500;
   }
 
   .parallax__title {
