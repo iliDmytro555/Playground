@@ -1,14 +1,14 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { Parallax } from "../Parallax/Parallax";
-import { TokenStorage } from "../TokenStorage/TokenStorage";
+import { MainPage } from "../../pages/mainPage/MainPage";
+import { TokensPage } from "../../pages/tokensPage/TokensPage";
 
 export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="" element={<Parallax />} />
-        <Route path="/tokens" element={<TokenStorage />} />
+        <Route path="" element={<MainPage />} />
+        <Route path="/tokens" element={<TokensPage />} />
       </Routes>
       <Link to="/tokens">Tokens</Link>
     </BrowserRouter>

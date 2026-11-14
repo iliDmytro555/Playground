@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import parallax_styles from "./Parallax.module.scss";
 
-import middleGround from "../../asset/resource/images/parallaxMiddleground.png";
-import frontGround from "../../asset/resource/images/parallaxFrontground.png";
+import background from "../../asset/resource/images/parallaxBackground.jpg";
+import middleground from "../../asset/resource/images/parallaxMiddleground.png";
+import frontground from "../../asset/resource/images/parallaxFrontground.png";
 
 export const Parallax: React.FC = () => {
   type shiftAxes = { xShift: number; yShift: number };
@@ -108,12 +109,12 @@ export const Parallax: React.FC = () => {
                   yShift: elementMove((frontgroundSize - 100) / 2).yShift,
                 }),
                 setTitleShift({
-                  xShift: elementMove(10).xShift,
-                  yShift: elementMove(10).yShift,
+                  xShift: elementMove(3).xShift,
+                  yShift: elementMove(8).yShift,
                 }),
                 setDescriptionShift({
-                  xShift: elementMove(15).xShift,
-                  yShift: elementMove(15).yShift,
+                  xShift: elementMove(2.5).xShift,
+                  yShift: elementMove(10).yShift,
                 }));
             }, 50);
           }}
@@ -127,7 +128,9 @@ export const Parallax: React.FC = () => {
             }, 50);
           }}
         >
-          <div
+          <img
+            src={background}
+            alt="Background layer"
             className={parallax_styles.parallaxBackground}
             style={{
               width: `${backgroundSize}%`,
@@ -135,9 +138,9 @@ export const Parallax: React.FC = () => {
               left: `${shiftRow("width", false, backgroundSize, 0, backgroundShift.xShift)}px`,
               top: `${shiftRow("height", false, backgroundSize, 0, backgroundShift.yShift)}px`,
             }}
-          ></div>
+          />
           <img
-            src={middleGround}
+            src={middleground}
             alt="Middleground layer"
             className={parallax_styles.parallaxMiddleground}
             style={{
@@ -148,7 +151,7 @@ export const Parallax: React.FC = () => {
             }}
           />
           <img
-            src={frontGround}
+            src={frontground}
             alt="Frontground layer"
             className={parallax_styles.parallaxFrontground}
             style={{

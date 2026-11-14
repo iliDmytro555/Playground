@@ -20,13 +20,6 @@
     position: absolute;
   }
 
-  .parallax__background {
-    background-image: url("../../asset/resource/images/parallaxBackground.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-
   .parallax__middleground {
     filter: brightness(0.5);
   }

@@ -22,6 +22,10 @@ $largeFontSizeList: (
   font-family: "JosefinSans";
 }
 
+body {
+  height: 200vh;
+}
+
 h1 {
   color: var.$color-text-primary-dark;
   font-size: typography.$font-size-5xl;

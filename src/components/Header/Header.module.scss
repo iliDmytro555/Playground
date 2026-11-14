@@ -1,0 +1,9 @@
+@use "../../styles/abstracts/colors" as colors;
+
+.container {
+  position: fixed;
+  width: 100vw;
+  background-color: colors.$indigo-900;
+  transition-duration: 0.2s;
+  z-index: 1;
+}

@@ -1,0 +1,153 @@
+/*!*************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./node_modules/sass-loader/dist/cjs/index.js!./src/styles/main.scss ***!
+  \*************************************************************************************************************************************************/
+@font-face {
+  font-family: "JosefinSans";
+  src: url(c464ea79c32a55349581.ttf);
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(7dafa57465a76b647002.ttf);
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(c464ea79c32a55349581.ttf);
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(7dafa57465a76b647002.ttf);
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(c464ea79c32a55349581.ttf);
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(7dafa57465a76b647002.ttf);
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(c464ea79c32a55349581.ttf);
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(7dafa57465a76b647002.ttf);
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(c464ea79c32a55349581.ttf);
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(7dafa57465a76b647002.ttf);
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(c464ea79c32a55349581.ttf);
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(7dafa57465a76b647002.ttf);
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(c464ea79c32a55349581.ttf);
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(7dafa57465a76b647002.ttf);
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+:root {
+  scrollbar-width: none;
+  background-color: #0c0b0e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "JosefinSans";
+}
+
+h1 {
+  color: #d9d7e0;
+  font-size: 72px;
+  font-weight: 700;
+}
+
+h2 {
+  color: #c0bdcc;
+  font-size: 60px;
+  font-weight: 600;
+}
+
+h3 {
+  color: #c0bdcc;
+  font-size: 48px;
+  font-weight: 600;
+}
+
+h4 {
+  color: #c0bdcc;
+  font-size: 36px;
+  font-weight: 600;
+}
+
+h5 {
+  color: #c0bdcc;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+h6 {
+  color: #c0bdcc;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+p {
+  color: #c0bdcc;
+  font-size: 20px;
+  font-weight: 400;
+}
