@@ -3,81 +3,61 @@ import React, { useEffect, useRef, useState } from "react";
 import header_styles from "./Header.module.scss";
 
 export const Header: React.FC = () => {
-  type direction = "up" | "down";
-
-  const prevScrolledHeight = useRef<number>(window.scrollY);
-  const prevScrollDirection = useRef<direction>("up");
-
-  const [scrollDirection, setScrollDirection] = useState<direction>("up");
-  const [scrolledHeight, setScrolledHeight] = useState<number>(0);
-
-  const [scrolledHeightAfterRedirection, setScrolledHeightAfterRedirection] =
-    useState<number>(0);
-
-  const [isVisible, setIsVisible] = useState<boolean>(true);
-
   const headerHeight: number = 100;
 
+  const prevHeight = useRef<number>(window.scrollY);
+
+  const [startHeight, setStartHeight] = useState(window.scrollY);
+  const [isVisible, setIsVisible] = useState<boolean>(true);
+
   useEffect(() => {
-    const hideHeader: () => void = () => {
-      setIsVisible(false);
+    const hideHeader = () => {
+      setIsVisible(!isVisible);
     };
 
     window.addEventListener("click", hideHeader);
 
     return () => window.removeEventListener("click", hideHeader);
+  }, [isVisible]);
+
+  useEffect(() => {
+    const startedHeight = () => {
+      setStartHeight(window.scrollY);
+    };
+
+    window.addEventListener("scrollend", startedHeight);
+
+    return () => window.removeEventListener("scrollend", startedHeight);
   }, []);
 
   useEffect(() => {
-    const scrollChange: () => void = () => {
-      const currentScrolledHeight = window.scrollY;
-      console.log(prevScrollDirection.current);
+    const scrolledHeight = (diff: number) => {
+      const currentHeight = window.scrollY;
 
-      setScrolledHeight(currentScrolledHeight);
-
-      if (currentScrolledHeight > prevScrolledHeight.current) {
-        setScrollDirection("down");
-      } else if (currentScrolledHeight < prevScrolledHeight.current) {
-        setScrollDirection("up");
+      if (currentHeight - startHeight > diff) {
+        setIsVisible(false);
+        setStartHeight(currentHeight);
+      } else if (currentHeight - startHeight < -diff) {
+        setIsVisible(true);
+        setStartHeight(currentHeight);
       }
 
-      console.log(scrollDirection);
-      if (prevScrollDirection.current !== scrollDirection) {
-        setScrolledHeightAfterRedirection(window.scrollY);
+      if (
+        (prevHeight.current < currentHeight && !isVisible) ||
+        (prevHeight.current > currentHeight && isVisible)
+      ) {
+        setStartHeight(currentHeight);
       }
 
-      prevScrolledHeight.current = currentScrolledHeight;
-      prevScrollDirection.current = scrollDirection;
-      console.log("_____________");
+      prevHeight.current = currentHeight;
     };
 
-    window.addEventListener("scroll", scrollChange);
+    const exactScroll = () => scrolledHeight(30);
 
-    return () => window.removeEventListener("scroll", scrollChange);
-  }, [scrolledHeight]);
+    window.addEventListener("scroll", exactScroll);
 
-  useEffect(() => {
-    if (
-      Math.abs(scrolledHeightAfterRedirection - scrolledHeight) > 100 &&
-      scrollDirection == "down"
-    ) {
-      setIsVisible(false);
-    } else if (
-      Math.abs(scrolledHeightAfterRedirection - scrolledHeight) > 100 &&
-      scrollDirection == "up"
-    ) {
-      setIsVisible(true);
-    }
-
-    // console.log(
-    //   "Direction: ",
-    //   scrollDirection,
-    //   " After: ",
-    //   scrolledHeightAfterRedirection,
-    //   " Difference: ",
-    //   Math.abs(scrolledHeightAfterRedirection - scrolledHeight),
-    // );
-  }, [scrolledHeight]);
+    return () => window.removeEventListener("scroll", exactScroll);
+  }, [startHeight, isVisible]);
 
   return (
     <div
