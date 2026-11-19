@@ -1,6 +1,7 @@
 import React from "react";
 import { Parallax } from "../../components/Parallax/Parallax";
 import { Header } from "../../components/Header/Header";
+import { Slider } from "../../components/Slider/Slider";
 
 export const MainPage: React.FC = () => {
   return (
@@ -10,6 +11,7 @@ export const MainPage: React.FC = () => {
       </header>
       <main>
         <Parallax />
+        <Slider />
       </main>
     </>
   );

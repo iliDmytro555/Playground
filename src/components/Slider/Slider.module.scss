@@ -1,0 +1,30 @@
+@use "../../styles/abstracts/colors" as colors;
+@use "../../styles/abstracts/typography" as typography;
+
+$fontSize: typography.$font-size-sm;
+
+.slider {
+  display: inline-grid;
+  grid-template-columns: 1fr repeat(10, 2fr) 1fr;
+  justify-items: center;
+  align-items: center;
+  background-color: colors.$neutral-300;
+  width: auto;
+  height: 100px;
+  user-select: none;
+
+  .slide {
+    width: $fontSize;
+    height: $fontSize;
+    font-size: $fontSize;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+
+  .activeSlide {
+    border-color: red;
+  }
+}
