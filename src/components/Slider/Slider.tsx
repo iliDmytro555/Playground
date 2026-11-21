@@ -5,6 +5,7 @@ import { SliderI } from "../../types/sliderTypes";
 import slider_styles from "./Slider.module.scss";
 
 export const Slider: React.FC<SliderI> = ({
+  width = 50,
   direction,
   isCircular = true,
   delay = 0,
@@ -34,17 +35,24 @@ export const Slider: React.FC<SliderI> = ({
     fullArr.slice(0, vicinityWidth),
   );
 
-  const prevIndex = useRef<number>(0);
+  const startPosition = useRef<number>(0);
+  const prevCursorPosition = useRef<number>(0);
+
+  const [cursorShift, setCursorShift] = useState<number>(0);
 
   const intervalId = useRef<number | null>(null);
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentVicinityIndex, setCurrentVicinityIndex] = useState<number>(0);
 
-  const [isActive, setIsActive] = useState<boolean>(false);
+  const [isActive, setIsActive] = useState<boolean>(false); //Може переробити це на useRef?
 
   const [cursorSpeed, setCursorSpeed] = useState<number>(0);
   const [maxSpeed, setMaxSpeed] = useState<number>(0);
+
+  const [deltaMove, setDeltaMove] = useState<number>(0);
+
+  const [turnNumber, setTurnNumber] = useState<number>(1);
 
   useEffect(() => {
     if (isCircular) {
@@ -72,7 +80,6 @@ export const Slider: React.FC<SliderI> = ({
     }
 
     if (currentIndex > 0) {
-      prevIndex.current = currentIndex;
       setCurrentIndex((prev) => prev - 1);
     }
   };
@@ -93,7 +100,6 @@ export const Slider: React.FC<SliderI> = ({
     }
 
     if (currentIndex < fullArr.length - 1) {
-      prevIndex.current = currentIndex;
       setCurrentIndex((prev) => prev + 1);
     }
   };
@@ -186,6 +192,30 @@ export const Slider: React.FC<SliderI> = ({
     }
   }, [currentIndex]);
 
+  useEffect(() => {
+    const gap =
+      (width / 100) *
+      document.documentElement.clientWidth *
+      (100 / vicinityWidth / 100);
+
+    setDeltaMove(turnNumber * Math.floor(gap) - Math.abs(cursorShift));
+
+    if (
+      deltaMove <= 0 &&
+      // || deltaMove >= turnNumber * Math.floor(gap)
+      isActive
+    ) {
+      setTurnNumber((prev) => prev + 1);
+      if (prevCursorPosition.current < cursorShift) {
+        moveBackward();
+      } else if (prevCursorPosition.current > cursorShift) {
+        moveForward();
+      }
+    }
+
+    prevCursorPosition.current = cursorShift;
+  }, [cursorShift, turnNumber]);
+
   return (
     <div
       onClick={(e) => {
@@ -200,33 +230,45 @@ export const Slider: React.FC<SliderI> = ({
         <p>{maxSpeed}</p>
         <p>Current vicinity: {currentVicinityIndex}</p>
         <p>Current: {currentIndex}</p>
+        <p>Cursor shift: {cursorShift}</p>
       </div>
       <div
-        className={slider_styles.slider}
-        onMouseDown={() => {
-          setIsActive(true);
-        }}
-        onMouseUp={() => {
-          setIsActive(false);
-        }}
-        onMouseMove={(e) => {
-          if (isActive) {
-            setCursorSpeed(e.movementX);
-          }
+        className={slider_styles.sliderContainer}
+        style={{
+          width: `${width}%`,
         }}
       >
-        <div onClick={moveBackward}>Backward</div>
-
-        {vicinityArr.map((slide, index) => (
-          <div
-            key={slide}
-            className={`${slider_styles.slide} ${index == currentVicinityIndex ? slider_styles.activeSlide : null}`}
-          >
-            {slide}
-          </div>
-        ))}
-
-        <div onClick={moveForward}>forward</div>
+        <div
+          className={slider_styles.slider}
+          style={{
+            gridTemplateColumns: `repeat(${vicinityWidth}, ${100 / vicinityWidth}%)`,
+            left: `${cursorShift}px`,
+          }}
+          onMouseDown={(e) => {
+            startPosition.current = e.pageX;
+            setIsActive(true);
+          }}
+          onMouseUp={() => {
+            setCursorShift(0);
+            setTurnNumber(1);
+            setIsActive(false);
+          }}
+          onMouseMove={(e) => {
+            if (isActive) {
+              setCursorShift(e.pageX - startPosition.current);
+              setCursorSpeed(e.movementX);
+            }
+          }}
+        >
+          {vicinityArr.map((slide, index) => (
+            <div
+              key={slide}
+              className={`${slider_styles.slide} ${index == currentVicinityIndex ? slider_styles.activeSlide : null}`}
+            >
+              {slide}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
