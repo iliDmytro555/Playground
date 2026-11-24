@@ -10,7 +10,8 @@ export const Slider: React.FC<SliderI> = ({
   isCircular = true,
   delay = 0,
 }) => {
-  const vicinityWidth = 7; //НЕПАРНЕ ЗНАЧЕННЯ
+  const vicinityWidth = 9; //НЕПАРНЕ ЗНАЧЕННЯ
+  const visibleVicinityWidth = 5;
 
   const [fullArr, setFullArr] = useState<number[]>([
     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -52,7 +53,8 @@ export const Slider: React.FC<SliderI> = ({
 
   const [deltaMove, setDeltaMove] = useState<number>(0);
 
-  const [turnNumber, setTurnNumber] = useState<number>(1);
+  const [circlesAmount, setCirclesAmount] = useState<number>(1);
+  const [turnAmount, setTurnAmount] = useState<number>(1);
 
   useEffect(() => {
     if (isCircular) {
@@ -150,12 +152,16 @@ export const Slider: React.FC<SliderI> = ({
     });
   };
 
-  const moveBackward = () => {
-    isCircular ? moveBackwardCircular() : moveBackwardRegular();
-  };
+  const move = () => {
+    console.log(turnAmount);
+    if (turnAmount > 0) {
+      isCircular ? moveForwardCircular() : moveForwardRegular();
+    } else if (turnAmount < 0) {
+      isCircular ? moveBackwardCircular() : moveBackwardRegular();
+    }
 
-  const moveForward = () => {
-    isCircular ? moveForwardCircular() : moveForwardRegular();
+    setCirclesAmount(1);
+    setTurnAmount(0);
   };
 
   //НЕ ЗАБУДЬ ВИДАЛИТИ ЦЕ
@@ -167,7 +173,7 @@ export const Slider: React.FC<SliderI> = ({
 
   useEffect(() => {
     if (delay > 0) {
-      intervalId.current = setInterval(moveForward, delay);
+      intervalId.current = setInterval(move, delay);
     }
 
     return () => {
@@ -198,23 +204,24 @@ export const Slider: React.FC<SliderI> = ({
       document.documentElement.clientWidth *
       (100 / vicinityWidth / 100);
 
-    setDeltaMove(turnNumber * Math.floor(gap) - Math.abs(cursorShift));
+    setDeltaMove(circlesAmount * Math.floor(gap) - Math.abs(cursorShift));
 
     if (
       deltaMove <= 0 &&
-      // || deltaMove >= turnNumber * Math.floor(gap)
+      // || deltaMove >= circlesAmount * Math.floor(gap)
       isActive
     ) {
-      setTurnNumber((prev) => prev + 1);
+      setCirclesAmount((prev) => prev + 1);
+      console.log(turnAmount);
       if (prevCursorPosition.current < cursorShift) {
-        moveBackward();
+        setTurnAmount((prev) => prev - 1);
       } else if (prevCursorPosition.current > cursorShift) {
-        moveForward();
+        setTurnAmount((prev) => prev + 1);
       }
     }
 
     prevCursorPosition.current = cursorShift;
-  }, [cursorShift, turnNumber]);
+  }, [cursorShift, turnAmount, circlesAmount]);
 
   return (
     <div
@@ -241,6 +248,7 @@ export const Slider: React.FC<SliderI> = ({
         <div
           className={slider_styles.slider}
           style={{
+            width: `${(100 / width) * (width / visibleVicinityWidth) * vicinityWidth}%`,
             gridTemplateColumns: `repeat(${vicinityWidth}, ${100 / vicinityWidth}%)`,
             left: `${cursorShift}px`,
           }}
@@ -250,8 +258,8 @@ export const Slider: React.FC<SliderI> = ({
           }}
           onMouseUp={() => {
             setCursorShift(0);
-            setTurnNumber(1);
             setIsActive(false);
+            move();
           }}
           onMouseMove={(e) => {
             if (isActive) {

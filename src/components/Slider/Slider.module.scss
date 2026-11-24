@@ -4,15 +4,16 @@
 $fontSize: typography.$font-size-sm;
 
 .sliderContainer {
-  display: inline-block;
+  display: grid;
   background-color: colors.$neutral-300;
   user-select: none;
+  overflow: hidden;
 }
 
 .slider {
-  width: 100%;
   position: relative;
   display: inline-grid;
+  justify-self: center;
   justify-items: center;
   align-items: center;
   height: 100px;
@@ -29,7 +30,8 @@ $fontSize: typography.$font-size-sm;
     padding: 10px;
     margin: 10px;
     text-align: center;
-    border: 2px solid black;
+    color: colors.$neutral-800;
+    border: 2px solid colors.$neutral-800;
     border-radius: 10px;
   }
 
