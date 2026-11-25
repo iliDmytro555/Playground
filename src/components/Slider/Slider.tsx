@@ -1,168 +1,224 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useDebugValue, useEffect, useRef, useState } from "react";
 
-import { SliderI } from "../../types/sliderTypes";
+import { SliderI, ElementI } from "../../types/sliderTypes";
 
 import slider_styles from "./Slider.module.scss";
 
-export const Slider: React.FC<SliderI> = ({
-  width = 50,
+export const Slider: React.FC<SliderI<number>> = ({
+  arr,
+  visibleSlidesAmount,
+  width = 100,
   direction,
-  isCircular = true,
+  isCircular = false,
   delay = 0,
 }) => {
-  const vicinityWidth = 9; //НЕПАРНЕ ЗНАЧЕННЯ
-  const visibleVicinityWidth = 5;
+  // const vicinityWidth = 9; //НЕПАРНЕ ЗНАЧЕННЯ
 
-  const [fullArr, setFullArr] = useState<number[]>([
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-    21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
-    40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58,
-    59,
-  ]);
-
-  // interface ListI {
-  //   direction: "horizontal" | "vertival";
-  //   delay: number;
-  //   fullArr: number[];
-  //   vicinityArr: number[];
-
-  //   moveForward: () => void;
-  //   moveBackward: () => void;
-  // }
-
-  // const [regularList, setRegularList] = useState<ListI>(reglist);
-
-  const [vicinityArr, setVicinityArr] = useState<number[]>(
-    fullArr.slice(0, vicinityWidth),
+  const [vicinityArr, setVicinityArr] = useState<ElementI<number>[]>(
+    arr.map((el, index) => ({ id: index, value: el })),
   );
 
-  const startPosition = useRef<number>(0);
-  const prevCursorPosition = useRef<number>(0);
+  const [sliderViewportWidth, setSliderViewportWidth] = useState<number>(0);
+  const [sliderViewportGap, setSliderViewportGap] = useState<number>(0);
+  const [onePartSize, setOnePartSize] = useState<number>(0);
 
+  const [sliderBlockSize, setSliderBlockSize] = useState<number>(0);
+  const [sliderElementSize, setSliderElementSize] = useState<number>(0);
+
+  const [isActive, setIsActive] = useState<boolean>(false); //Може переробити це на useRef?
+
+  const cursorStartPosition = useRef<number>(0);
   const [cursorShift, setCursorShift] = useState<number>(0);
+
+  const [totalShift, setTotalShift] = useState<number>(0);
+  const [trackTranslate, setTrackTranslate] = useState<number>(0);
 
   const intervalId = useRef<number | null>(null);
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [currentVicinityIndex, setCurrentVicinityIndex] = useState<number>(0);
-
-  const [isActive, setIsActive] = useState<boolean>(false); //Може переробити це на useRef?
+  // const [currentVicinityIndex, setCurrentVicinityIndex] = useState<number>(0);
 
   const [cursorSpeed, setCursorSpeed] = useState<number>(0);
   const [maxSpeed, setMaxSpeed] = useState<number>(0);
 
-  const [deltaMove, setDeltaMove] = useState<number>(0);
+  useEffect(() => {
+    const resize = () => {
+      const viewportWidth = document.getElementsByClassName(
+        `${slider_styles.sliderViewport}`,
+      )[0].clientWidth;
 
-  const [circlesAmount, setCirclesAmount] = useState<number>(1);
-  const [turnAmount, setTurnAmount] = useState<number>(1);
+      const onePartWidth = sliderViewportWidth / visibleSlidesAmount;
+
+      const gap = onePartWidth / 3;
+      const blockSize = onePartWidth - gap + gap / visibleSlidesAmount;
+      const elementSize = blockSize * 0.6;
+
+      setSliderViewportWidth(viewportWidth);
+      setOnePartSize(onePartWidth);
+      setSliderBlockSize(blockSize);
+      setSliderViewportGap(gap);
+      setSliderElementSize(elementSize);
+    };
+
+    resize();
+
+    window.addEventListener("resize", resize);
+
+    return () => window.removeEventListener("resize", resize);
+  }, [sliderViewportWidth]);
 
   useEffect(() => {
-    if (isCircular) {
-      setCurrentVicinityIndex((vicinityArr.length - 1) / 2);
-      setCurrentIndex((vicinityArr.length - 1) / 2);
+    console.log(
+      document.getElementsByClassName(`${slider_styles.sliderTrack}`)[0]
+        .clientWidth,
+    );
+    if (totalShift < 0) {
+      setTotalShift(0);
+    } else if (
+      totalShift >
+      (sliderBlockSize + sliderViewportGap) * vicinityArr.length -
+        sliderViewportWidth -
+        sliderViewportGap
+    ) {
+      setTotalShift(
+        (sliderBlockSize + sliderViewportGap) * vicinityArr.length -
+          sliderViewportWidth -
+          sliderViewportGap,
+      );
     } else {
-      setCurrentVicinityIndex(0);
-      setCurrentIndex(0);
+      setTotalShift((prev) => prev + cursorShift);
     }
-  }, []);
+  }, [cursorShift]);
 
-  const moveBackwardRegular = () => {
-    const globalFirstIndex = currentIndex - currentVicinityIndex;
+  //Зроби так, щоб слайдер прокручувався, лише коли currentIndex = центру
+  useEffect(() => {
+    const centralIndex = (visibleSlidesAmount - 1) / 2;
 
-    if (currentVicinityIndex == (vicinityArr.length - 1) / 2) {
-      if (fullArr[globalFirstIndex - 1] !== undefined) {
-        const newArr = vicinityArr.map((el, index) => {
-          let globalEquivalent = globalFirstIndex + index;
+    setTrackTranslate(totalShift);
+  }, [totalShift]);
 
-          return fullArr[globalEquivalent - 1];
-        });
+  // useEffect(() => {
+  //   const centralIndex = (visibleSlidesAmount - 1) / 2;
 
-        setVicinityArr(newArr);
-      }
-    }
+  //   if (totalShift < onePartSize * centralIndex) {
+  //     return;
+  //   } else if (
+  //     totalShift >
+  //     onePartSize * (vicinityArr.length - 1 - centralIndex)
+  //   ) {
+  //     return;
+  //   } else {
+  //     setTrackTranslate((prev) => prev + cursorShift);
+  //   }
+  // }, [totalShift]);
 
-    if (currentIndex > 0) {
-      setCurrentIndex((prev) => prev - 1);
-    }
-  };
+  // const [deltaMove, setDeltaMove] = useState<number>(0);
 
-  const moveForwardRegular = () => {
-    const globalFirstIndex = currentIndex - currentVicinityIndex;
+  // useEffect(() => {
+  //   if (isCircular) {
+  //     setCurrentVicinityIndex((vicinityArr.length - 1) / 2);
+  //     setCurrentIndex((vicinityArr.length - 1) / 2);
+  //   } else {
+  //     setCurrentVicinityIndex(0);
+  //     setCurrentIndex(0);
+  //   }
+  // }, []);
 
-    if (currentVicinityIndex == (vicinityArr.length - 1) / 2) {
-      if (fullArr[globalFirstIndex + vicinityArr.length] !== undefined) {
-        const newArr = vicinityArr.map((el, index) => {
-          let globalEquivalent = globalFirstIndex + index;
+  // const moveIndexBackwardRegular = () => {
+  //   if (currentIndex == (vicinityArr.length - 1) / 2) {
+  //     if (vicinityArr[globalFirstIndex - 1] !== undefined) {
+  //       const newArr = vicinityArr.map((el, index) => {
+  //         let globalEquivalent = globalFirstIndex + index;
 
-          return fullArr[globalEquivalent + 1];
-        });
+  //         return fullArr[globalEquivalent - 1];
+  //       });
 
-        setVicinityArr(newArr);
-      }
-    }
+  //       setVicinityArr(newArr);
+  //     }
+  //   }
 
-    if (currentIndex < fullArr.length - 1) {
-      setCurrentIndex((prev) => prev + 1);
-    }
-  };
+  //   if (currentIndex > 0) {
+  //     setCurrentIndex((prev) => prev - 1);
+  //   }
+  // };
 
-  const moveBackwardCircular = () => {
-    const lastElement = fullArr[fullArr.length - 1];
+  // const moveForwardRegular = () => {
+  //   const globalFirstIndex = currentIndex - currentVicinityIndex;
 
-    const newArr = fullArr.map((el, index) => {
-      if (index == 0) {
-        return lastElement;
-      } else {
-        return fullArr[index - 1];
-      }
-    });
+  //   if (currentVicinityIndex == (vicinityArr.length - 1) / 2) {
+  //     if (fullArr[globalFirstIndex + vicinityArr.length] !== undefined) {
+  //       const newArr = vicinityArr.map((el, index) => {
+  //         let globalEquivalent = globalFirstIndex + index;
 
-    setFullArr(newArr);
-    setVicinityArr(newArr.slice(0, vicinityWidth));
+  //         return fullArr[globalEquivalent + 1];
+  //       });
 
-    setCurrentIndex((prev) => {
-      if (prev == 0) {
-        return 59;
-      } else {
-        return prev - 1;
-      }
-    });
-  };
+  //       setVicinityArr(newArr);
+  //     }
+  //   }
 
-  const moveForwardCircular = () => {
-    const firstElement = fullArr[0];
+  //   if (currentIndex < fullArr.length - 1) {
+  //     setCurrentIndex((prev) => prev + 1);
+  //   }
+  // };
 
-    const newArr = fullArr.map((el, index) => {
-      if (index == fullArr.length - 1) {
-        return firstElement;
-      } else {
-        return fullArr[index + 1];
-      }
-    });
+  // const moveBackwardCircular = () => {
+  //   const lastElement = fullArr[fullArr.length - 1];
 
-    setFullArr(newArr);
-    setVicinityArr(newArr.slice(0, vicinityWidth));
+  //   const newArr = fullArr.map((el, index) => {
+  //     if (index == 0) {
+  //       return lastElement;
+  //     } else {
+  //       return fullArr[index - 1];
+  //     }
+  //   });
 
-    setCurrentIndex((prev) => {
-      if (prev == 59) {
-        return 0;
-      } else {
-        return prev + 1;
-      }
-    });
-  };
+  //   setFullArr(newArr);
+  //   setVicinityArr(newArr.slice(0, vicinityWidth));
 
-  const move = () => {
-    console.log(turnAmount);
-    if (turnAmount > 0) {
-      isCircular ? moveForwardCircular() : moveForwardRegular();
-    } else if (turnAmount < 0) {
-      isCircular ? moveBackwardCircular() : moveBackwardRegular();
-    }
+  //   setCurrentIndex((prev) => {
+  //     if (prev == 0) {
+  //       return 59;
+  //     } else {
+  //       return prev - 1;
+  //     }
+  //   });
+  // };
 
-    setCirclesAmount(1);
-    setTurnAmount(0);
-  };
+  // const moveForwardCircular = () => {
+  //   const firstElement = fullArr[0];
+
+  //   const newArr = fullArr.map((el, index) => {
+  //     if (index == fullArr.length - 1) {
+  //       return firstElement;
+  //     } else {
+  //       return fullArr[index + 1];
+  //     }
+  //   });
+
+  //   setFullArr(newArr);
+  //   setVicinityArr(newArr.slice(0, vicinityWidth));
+
+  //   setCurrentIndex((prev) => {
+  //     if (prev == 59) {
+  //       return 0;
+  //     } else {
+  //       return prev + 1;
+  //     }
+  //   });
+  // };
+
+  // const move = () => {
+  //   console.log(turnAmount);
+  //   if (turnAmount > 0) {
+  //     isCircular ? moveForwardCircular() : moveForwardRegular();
+  //   } else if (turnAmount < 0) {
+  //     isCircular ? moveBackwardCircular() : moveBackwardRegular();
+  //   }
+
+  //   setCirclesAmount(1);
+  //   setTurnAmount(0);
+  // };
 
   //НЕ ЗАБУДЬ ВИДАЛИТИ ЦЕ
   useEffect(() => {
@@ -171,57 +227,57 @@ export const Slider: React.FC<SliderI> = ({
     }
   }, [cursorSpeed]);
 
-  useEffect(() => {
-    if (delay > 0) {
-      intervalId.current = setInterval(move, delay);
-    }
+  // useEffect(() => {
+  //   if (delay > 0) {
+  //     intervalId.current = setInterval(move, delay);
+  //   }
 
-    return () => {
-      clearInterval(intervalId.current!);
-    };
-  }, [currentIndex, currentVicinityIndex]);
+  //   return () => {
+  //     clearInterval(intervalId.current!);
+  //   };
+  // }, [currentIndex, currentVicinityIndex]);
 
-  useEffect(() => {
-    if (!isCircular) {
-      if (currentIndex <= (vicinityArr.length - 1) / 2) {
-        setCurrentVicinityIndex(currentIndex);
-      } else if (
-        fullArr.length - 1 - currentIndex <=
-        (vicinityArr.length - 1) / 2
-      ) {
-        setCurrentVicinityIndex(
-          vicinityArr.length - 1 - (fullArr.length - 1 - currentIndex),
-        );
-      } else {
-        setCurrentVicinityIndex((vicinityArr.length - 1) / 2);
-      }
-    }
-  }, [currentIndex]);
+  // useEffect(() => {
+  //   if (!isCircular) {
+  //     if (currentIndex <= (vicinityArr.length - 1) / 2) {
+  //       setCurrentVicinityIndex(currentIndex);
+  //     } else if (
+  //       fullArr.length - 1 - currentIndex <=
+  //       (vicinityArr.length - 1) / 2
+  //     ) {
+  //       setCurrentVicinityIndex(
+  //         vicinityArr.length - 1 - (fullArr.length - 1 - currentIndex),
+  //       );
+  //     } else {
+  //       setCurrentVicinityIndex((vicinityArr.length - 1) / 2);
+  //     }
+  //   }
+  // }, [currentIndex]);
 
-  useEffect(() => {
-    const gap =
-      (width / 100) *
-      document.documentElement.clientWidth *
-      (100 / vicinityWidth / 100);
+  // useEffect(() => {
+  //   const gap =
+  //     (width / 100) *
+  //     document.documentElement.clientWidth *
+  //     (100 / vicinityWidth / 100);
 
-    setDeltaMove(circlesAmount * Math.floor(gap) - Math.abs(cursorShift));
+  //   setDeltaMove(circlesAmount * Math.floor(gap) - Math.abs(cursorShift));
 
-    if (
-      deltaMove <= 0 &&
-      // || deltaMove >= circlesAmount * Math.floor(gap)
-      isActive
-    ) {
-      setCirclesAmount((prev) => prev + 1);
-      console.log(turnAmount);
-      if (prevCursorPosition.current < cursorShift) {
-        setTurnAmount((prev) => prev - 1);
-      } else if (prevCursorPosition.current > cursorShift) {
-        setTurnAmount((prev) => prev + 1);
-      }
-    }
+  //   if (
+  //     deltaMove <= 0 &&
+  //     // || deltaMove >= circlesAmount * Math.floor(gap)
+  //     isActive
+  //   ) {
+  //     setCirclesAmount((prev) => prev + 1);
+  //     console.log(turnAmount);
+  //     if (prevCursorPosition.current < cursorShift) {
+  //       setTurnAmount((prev) => prev - 1);
+  //     } else if (prevCursorPosition.current > cursorShift) {
+  //       setTurnAmount((prev) => prev + 1);
+  //     }
+  //   }
 
-    prevCursorPosition.current = cursorShift;
-  }, [cursorShift, turnAmount, circlesAmount]);
+  //   prevCursorPosition.current = cursorShift;
+  // }, [cursorShift, turnAmount, circlesAmount]);
 
   return (
     <div
@@ -235,45 +291,59 @@ export const Slider: React.FC<SliderI> = ({
       <div>
         <p>{cursorSpeed}</p>
         <p>{maxSpeed}</p>
-        <p>Current vicinity: {currentVicinityIndex}</p>
-        <p>Current: {currentIndex}</p>
-        <p>Cursor shift: {cursorShift}</p>
+        {/* <p>center: {onePartSize * ((visibleSlidesAmount - 1) / 2)}</p> */}
+        {/* <p>Current vicinity: {currentVicinityIndex}</p> */}
+        {/* <p>Current: {currentIndex}</p> */}
+        {/* <p>Cursor shift: {cursorShift}</p> */}
       </div>
       <div
-        className={slider_styles.sliderContainer}
+        className={slider_styles.sliderViewport}
         style={{
           width: `${width}%`,
         }}
       >
         <div
-          className={slider_styles.slider}
+          className={slider_styles.sliderTrack}
           style={{
-            width: `${(100 / width) * (width / visibleVicinityWidth) * vicinityWidth}%`,
-            gridTemplateColumns: `repeat(${vicinityWidth}, ${100 / vicinityWidth}%)`,
-            left: `${cursorShift}px`,
+            transform: `translate(${-trackTranslate}px)`,
+            height: `${sliderBlockSize}px`,
+            gap: `${sliderViewportGap}px`,
           }}
-          onMouseDown={(e) => {
-            startPosition.current = e.pageX;
+          onPointerDown={(e) => {
+            cursorStartPosition.current = e.pageX;
             setIsActive(true);
           }}
-          onMouseUp={() => {
-            setCursorShift(0);
-            setIsActive(false);
-            move();
-          }}
-          onMouseMove={(e) => {
+          onPointerMove={(e) => {
             if (isActive) {
-              setCursorShift(e.pageX - startPosition.current);
+              setCursorShift(cursorStartPosition.current - e.clientX);
+
+              cursorStartPosition.current = e.pageX;
+
               setCursorSpeed(e.movementX);
             }
           }}
+          onPointerUp={() => {
+            setIsActive(false);
+          }}
         >
-          {vicinityArr.map((slide, index) => (
+          {vicinityArr.map((slide) => (
             <div
-              key={slide}
-              className={`${slider_styles.slide} ${index == currentVicinityIndex ? slider_styles.activeSlide : null}`}
+              key={slide.id}
+              style={{
+                width: `${sliderBlockSize}px`,
+                height: `${sliderBlockSize}px`,
+              }}
+              className={`${slider_styles.block}`}
             >
-              {slide}
+              <div
+                className={`${slider_styles.slide}`}
+                style={{
+                  width: `${sliderElementSize}px`,
+                  height: `${sliderElementSize}px`,
+                }}
+              >
+                <p>{slide.value}</p>
+              </div>
             </div>
           ))}
         </div>

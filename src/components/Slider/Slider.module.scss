@@ -2,37 +2,44 @@
 @use "../../styles/abstracts/typography" as typography;
 
 $fontSize: typography.$font-size-sm;
+$gap: $fontSize;
 
-.sliderContainer {
-  display: grid;
+.sliderViewport {
   background-color: colors.$neutral-300;
   user-select: none;
   overflow: hidden;
+  // padding: {
+  //   left: $gap;
+  //   right: $gap;
+  // }
 }
 
-.slider {
-  position: relative;
-  display: inline-grid;
-  justify-self: center;
-  justify-items: center;
+.sliderTrack {
+  display: inline-flex;
+  flex-flow: row nowrap;
   align-items: center;
-  height: 100px;
   cursor: grab;
 
   &:active {
     cursor: grabbing;
   }
 
-  .slide {
-    width: $fontSize;
-    height: $fontSize;
-    font-size: $fontSize;
-    padding: 10px;
-    margin: 10px;
-    text-align: center;
-    color: colors.$neutral-800;
-    border: 2px solid colors.$neutral-800;
-    border-radius: 10px;
+  .block {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+
+    .slide {
+      display: grid;
+      justify-content: center;
+      align-content: center;
+      box-sizing: border-box;
+      font-size: $fontSize;
+      text-align: center;
+      color: colors.$neutral-800;
+      border: 2px solid colors.$neutral-800;
+      border-radius: 10px;
+    }
   }
 
   .activeSlide {
