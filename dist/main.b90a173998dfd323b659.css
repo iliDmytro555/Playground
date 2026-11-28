@@ -1,0 +1,600 @@
+/*!*************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./node_modules/sass-loader/dist/cjs/index.js!./src/styles/main.scss ***!
+  \*************************************************************************************************************************************************/
+@font-face {
+  font-family: "JosefinSans";
+  src: url(c464ea79c32a55349581.ttf);
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(7dafa57465a76b647002.ttf);
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(c464ea79c32a55349581.ttf);
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(7dafa57465a76b647002.ttf);
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(c464ea79c32a55349581.ttf);
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(7dafa57465a76b647002.ttf);
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(c464ea79c32a55349581.ttf);
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(7dafa57465a76b647002.ttf);
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(c464ea79c32a55349581.ttf);
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(7dafa57465a76b647002.ttf);
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(c464ea79c32a55349581.ttf);
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(7dafa57465a76b647002.ttf);
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(c464ea79c32a55349581.ttf);
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JosefinSans";
+  src: url(7dafa57465a76b647002.ttf);
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+:root {
+  scrollbar-width: none;
+  background-color: #0c0b0e;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "JosefinSans";
+}
+
+body {
+  height: 200vh;
+}
+
+h1 {
+  color: #d9d7e0;
+  font-size: 72px;
+  font-weight: 700;
+}
+
+h2 {
+  color: #c0bdcc;
+  font-size: 60px;
+  font-weight: 600;
+}
+
+h3 {
+  color: #c0bdcc;
+  font-size: 48px;
+  font-weight: 600;
+}
+
+h4 {
+  color: #c0bdcc;
+  font-size: 36px;
+  font-weight: 600;
+}
+
+h5 {
+  color: #c0bdcc;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+h6 {
+  color: #c0bdcc;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+p {
+  color: #c0bdcc;
+  font-size: 20px;
+  font-weight: 400;
+}
+/*!*************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./node_modules/sass-loader/dist/cjs/index.js!./src/components/Parallax/Parallax.module.scss ***!
+  \*************************************************************************************************************************************************************************/
+.rw6HDzM2DuwQDBVsklF4 {
+  display: grid;
+  height: 100vh;
+}
+
+.yx6dHLlFM0Kg9NMQvjEM {
+  position: relative;
+  justify-self: center;
+  align-self: center;
+  display: grid;
+  overflow: hidden;
+}
+.yx6dHLlFM0Kg9NMQvjEM .L2s7Tu6QuYDNGrDgc_og,
+.yx6dHLlFM0Kg9NMQvjEM .urI7gIneDOwVA6JTU0nj,
+.yx6dHLlFM0Kg9NMQvjEM .dSzm2m2lrRng9JPvrX7i {
+  position: absolute;
+}
+.yx6dHLlFM0Kg9NMQvjEM .urI7gIneDOwVA6JTU0nj {
+  filter: brightness(0.5);
+}
+.yx6dHLlFM0Kg9NMQvjEM .ClyGa0Fj46haUfLOZTfA,
+.yx6dHLlFM0Kg9NMQvjEM .IKTiQ7wrj4JX_cK48dNb {
+  width: 100%;
+  position: absolute;
+  text-align: center;
+}
+.yx6dHLlFM0Kg9NMQvjEM .ClyGa0Fj46haUfLOZTfA {
+  color: #0c0b0e;
+}
+.yx6dHLlFM0Kg9NMQvjEM .IKTiQ7wrj4JX_cK48dNb {
+  color: #211f28;
+}
+/*!*********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./node_modules/sass-loader/dist/cjs/index.js!./src/components/Header/Header.module.scss ***!
+  \*********************************************************************************************************************************************************************/
+.mTFHSVjnSUFdoSnWwGhe {
+  position: fixed;
+  width: 100vw;
+  background-color: #181136;
+  transition-duration: 0.2s;
+  z-index: 1;
+}
+/*!*********************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./node_modules/sass-loader/dist/cjs/index.js!./src/components/Slider/Slider.module.scss ***!
+  \*********************************************************************************************************************************************************************/
+.cyqmatZ8JuGGMhM8SpPu {
+  background-color: #8f89a4;
+  user-select: none;
+  overflow: hidden;
+}
+
+.ViroXY1JZuVI6nCyOkx8 {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  cursor: grab;
+}
+.ViroXY1JZuVI6nCyOkx8:active {
+  cursor: grabbing;
+}
+.ViroXY1JZuVI6nCyOkx8 .EcHGlWgBiri1rm7NBzQu {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+.ViroXY1JZuVI6nCyOkx8 .EcHGlWgBiri1rm7NBzQu .MCeNNB4ysT9OyLyzFKNy {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  box-sizing: border-box;
+  font-size: 18px;
+  text-align: center;
+  color: #211f28;
+  border: 2px solid #211f28;
+  border-radius: 10px;
+}
+.ViroXY1JZuVI6nCyOkx8 .eNPYuSIpjkCfHMsfQH8I {
+  background-color: red;
+}
+/*!************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[0].use[1]!./node_modules/sass-loader/dist/cjs/index.js!./src/pages/tokensPage/TokensPage.module.scss ***!
+  \************************************************************************************************************************************************************************/
+.qHGOg9ToSiZfLwuSTz4g div,
+.rMmU7tLEFiveLSKgzN8m div,
+.ZIqiBnJs3TVPKN7D_nEG div,
+.U35dsiYfxdDg7oivvqGo div,
+.PqMqhCIYD0jI0FIR_fxA div,
+.MlgyioYakTeWqzHp7K1I div,
+.QQI5Z2oA0fRiICmJD7NR div,
+.ClMWvlQgMYa4gjeusuga div,
+.EPA24C2JU3exQFJzl1W4 div {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.h6JFn5ih1kp3T6Elhsfw {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background-color: red;
+}
+
+.bOghGueznEa6tJYRymRS {
+  background-color: #e1b8ff;
+}
+
+.T2vF0gk4mWF4jTPKZAbC {
+  background-color: #b0a6e2;
+}
+
+.Ju9kNVHbEqxQzRE8B9Sw {
+  background-color: #feebb9;
+}
+
+.O57qijdwKHn10u7N4txM {
+  background-color: #97f2f2;
+}
+
+.zxxtDnuyKpge4GKhGE7o {
+  background-color: #bb5cff;
+}
+
+._UHPtccGp06oUyUdXz5A {
+  background-color: #7361cc;
+}
+
+._8bxyRVrW4nuBGMwG8P7 {
+  background-color: #fddf8b;
+}
+
+.VbNOZ5NwjQX7Fy8ybeWH {
+  background-color: #24e3e3;
+}
+
+.RNT8z10Ltn4cC9hTZTxs {
+  background-color: #a82eff;
+}
+
+.sxiVIQxTX1QKe98omOyk {
+  background-color: #543ec1;
+}
+
+.jP_Tvq7IrBiG2q2SddQW {
+  background-color: #fdd25e;
+}
+
+.MwQrQy9H8RS7pwylXQN_ {
+  background-color: #1ecece;
+}
+
+.MwYVuDhblPda5QhfYdZ8 {
+  background-color: #7a00d1;
+}
+
+.mOpRHZwDaKnNxxcflhJw {
+  background-color: #45339e;
+}
+
+.LkZnKhnZazvxWNqEC5Nk {
+  background-color: #fcc631;
+}
+
+._1hi68cSkEfGqaKLl5i6 {
+  background-color: #18b9b9;
+}
+
+.o_8U7a_T9NUF0dEF78bn {
+  background-color: #5f00a3;
+}
+
+.Z30s1QoAzK7VH1Qenpmj {
+  background-color: #281e5d;
+}
+
+.Sm1xCuspEljfLNCPeUWE {
+  background-color: #fbb904;
+}
+
+.m1qdYlwlxTD8FzjKzlCl {
+  background-color: #139090;
+}
+
+.QWgoPSo7dnQXZmYOMTwu {
+  background-color: #2a0047;
+}
+
+.oOD0ZwCaKKiMqhY4iTUX {
+  background-color: #181136;
+}
+
+.DcNHg5Y7tmXUK2ZwBAQF {
+  background-color: #ce9803;
+}
+
+.C9m8oNuzRmYufXA_Daks {
+  background-color: #0d6868;
+}
+
+.UBdHe53tKJKkYT2sYwU7 {
+  background-color: #f86363;
+}
+
+.CcYmrzc4K3jqFqjldQ20 {
+  background-color: #81da81;
+}
+
+.vWqqJ_jsavIDEN4ZbPkP {
+  background-color: #6565c2;
+}
+
+.xzw9cwyWeXBph5lObPg_ {
+  background-color: #efef6c;
+}
+
+.tH3iZ4jweHNMTXI22tqa {
+  background-color: #f71414;
+}
+
+.K69XzoL8rIbdNk78Jcga {
+  background-color: #34b334;
+}
+
+.wijVhcpLdNfGy_FcAZIx {
+  background-color: #2626d9;
+}
+
+.gJHYPVhxHnl6vfxeAAlg {
+  background-color: #e3e319;
+}
+
+.UY4A55Ea0RqI6jXAuFuZ {
+  background-color: #9c0707;
+}
+
+.q61vZ1WfAjyA7DH8qowE {
+  background-color: #1a5b1a;
+}
+
+.xGo13ZyPYmiFuQn5j3el {
+  background-color: #121264;
+}
+
+.sMCBSmgAJ94kwe5XZwsL {
+  background-color: #adad1d;
+}
+
+.bMVt5Z4sf0KuZn9UU9Nb {
+  background-color: #f1f1f4;
+}
+
+.uQX4b504vNQL9bEizUp_ {
+  background-color: #d9d7e0;
+}
+
+.ICSs0htHCD71hg7TP2Ig {
+  background-color: #c0bdcc;
+}
+
+.IWzxRZz4QjJmrb5_xfIU {
+  background-color: #a8a3b8;
+}
+
+.cX7GOE0TYP3N2RwPJ5qn {
+  background-color: #8f89a4;
+}
+
+.hBXpwRzEnITX5JQFlDOE {
+  background-color: #776f90;
+}
+
+.RWjLUx9DLbO0gjnUTFze {
+  background-color: #615b76;
+}
+
+.Mn57buyX70N03fOTT3uU {
+  background-color: #4c475c;
+}
+
+.axePZFErISb7F54QCpHD {
+  background-color: #373342;
+}
+
+.rfvdTYOlTPxZZ5eay0mF {
+  background-color: #211f28;
+}
+
+.f7SPuBSdMwIIKnDetr40 {
+  background-color: #0c0b0e;
+}
+
+.vhvL9BgoHHtgB9qsaxaF {
+  font-size: 12px;
+}
+
+.ymx6gIlIPyCFu0eF1PtB {
+  font-size: 14px;
+}
+
+.DcFxREqe5iJ0yEEfYjvL {
+  font-size: 16px;
+}
+
+.Iaw45yNUzhzv9rkB40vf {
+  font-size: 18px;
+}
+
+.uQvgfBVk9U4PUBAYih9g {
+  font-size: 20px;
+}
+
+.uBmQrHqZgqsg_A8Pt1tg {
+  font-size: 24px;
+}
+
+.woQgoxQGVQqxPfc5pc67 {
+  font-size: 30px;
+}
+
+.zNUIj57Yy3Y6eo0fdLns {
+  font-size: 36px;
+}
+
+._5nBIW6MUhF68XbzSymaA {
+  font-size: 48px;
+}
+
+.zX2T673ooXnG7H73X11y {
+  font-size: 60px;
+}
+
+.q9tJTRT24vSV1YHai5x_ {
+  font-size: 72px;
+}
+
+.OaClYZksPbqTW6WMMPPJ {
+  font-weight: 100;
+}
+
+.KJ65Q9i_90ENpNBrk7nR {
+  font-weight: 200;
+}
+
+.AA4_1CBt8W2xWf1bRHcm {
+  font-weight: 300;
+}
+
+.caenLToPHDH6Z3tVjKSe {
+  font-weight: 400;
+}
+
+.ZPvjnXOEXIGwPVHJvCFg {
+  font-weight: 500;
+}
+
+.bzkpS_u0dhzI64PynjnI {
+  font-weight: 600;
+}
+
+.WGOks6nmLDYuDjxm1MGJ {
+  font-weight: 700;
+}
+
+.g83R_LieDlQjyWXp_T1l {
+  line-height: 1;
+}
+
+.nVV3HYLdvBp84icfa8n0 {
+  line-height: 1.2;
+}
+
+.c3O8DRbtT7zd849qrXhg {
+  line-height: 1.4;
+}
+
+.dc0QHv0danwIVqU6_HQc {
+  line-height: 1.6;
+}
+
+.Mz3QsXj9HWAT4SVeQhzy {
+  line-height: 1.8;
+}
+
+.ZkoaeqO61ODfH9L68sL2 {
+  line-height: 2;
+}
+
+.ABeXboHk0jnbkTQvjlrc {
+  margin: 2px;
+}
+
+.bIe3VgLYO4poQ49sQimb {
+  margin: 4px;
+}
+
+.TVxmF5PvqBE1Ico7ZxTw {
+  margin: 8px;
+}
+
+.lRh0xTwG0d4b5T0sVjzI {
+  margin: 12px;
+}
+
+.EXcolVhCTWoyAowr1qAM {
+  margin: 16px;
+}
+
+.xAnlBzSB5zHIbHqXtMlq {
+  margin: 20px;
+}
+
+.bMEsYMPWAiWjsk392Bet {
+  margin: 24px;
+}
+
+.yTJLdKKGq053V1k3Nytl {
+  margin: 32px;
+}
+
+.J3l39MTMXXiLqtCbbmWG {
+  margin: 36px;
+}
+
+.T5dTef3aYbZ6aaFM88Wu {
+  margin: 48px;
+}
+
+.IFTkmnPUEmjGliRSrvwl {
+  margin: 60px;
+}
+
+.jL1TqN2odafftbmQvG1k {
+  margin: 72px;
+}
+
+.KHC8NIRuEQ665pQE9QDr {
+  margin: 96px;
+}

@@ -20,7 +20,6 @@ export const Slider: React.FC<SliderI<number>> = ({
 
   const [sliderViewportWidth, setSliderViewportWidth] = useState<number>(0);
   const [sliderViewportGap, setSliderViewportGap] = useState<number>(0);
-  const [onePartSize, setOnePartSize] = useState<number>(0);
 
   const [sliderBlockSize, setSliderBlockSize] = useState<number>(0);
   const [sliderElementSize, setSliderElementSize] = useState<number>(0);
@@ -30,16 +29,30 @@ export const Slider: React.FC<SliderI<number>> = ({
   const cursorStartPosition = useRef<number>(0);
   const [cursorShift, setCursorShift] = useState<number>(0);
 
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+
   const [totalShift, setTotalShift] = useState<number>(0);
   const [trackTranslate, setTrackTranslate] = useState<number>(0);
 
   const intervalId = useRef<number | null>(null);
 
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
   // const [currentVicinityIndex, setCurrentVicinityIndex] = useState<number>(0);
 
   const [cursorSpeed, setCursorSpeed] = useState<number>(0);
   const [maxSpeed, setMaxSpeed] = useState<number>(0);
+
+  const straighten: (rest: number, index: number) => number = (
+    rest: number,
+    index: number,
+  ) => {
+    const slideWidth = sliderBlockSize + sliderViewportGap;
+
+    if (rest > sliderBlockSize) {
+      return straighten(rest - slideWidth, index + 1);
+    } else {
+      return index;
+    }
+  };
 
   useEffect(() => {
     const resize = () => {
@@ -54,7 +67,6 @@ export const Slider: React.FC<SliderI<number>> = ({
       const elementSize = blockSize * 0.6;
 
       setSliderViewportWidth(viewportWidth);
-      setOnePartSize(onePartWidth);
       setSliderBlockSize(blockSize);
       setSliderViewportGap(gap);
       setSliderElementSize(elementSize);
@@ -68,34 +80,58 @@ export const Slider: React.FC<SliderI<number>> = ({
   }, [sliderViewportWidth]);
 
   useEffect(() => {
-    console.log(
-      document.getElementsByClassName(`${slider_styles.sliderTrack}`)[0]
-        .clientWidth,
-    );
     if (totalShift < 0) {
       setTotalShift(0);
     } else if (
       totalShift >
-      (sliderBlockSize + sliderViewportGap) * vicinityArr.length -
-        sliderViewportWidth -
-        sliderViewportGap
+      (sliderBlockSize + sliderViewportGap) * (vicinityArr.length - 1)
     ) {
       setTotalShift(
-        (sliderBlockSize + sliderViewportGap) * vicinityArr.length -
-          sliderViewportWidth -
-          sliderViewportGap,
+        (sliderBlockSize + sliderViewportGap) * (vicinityArr.length - 1),
       );
     } else {
       setTotalShift((prev) => prev + cursorShift);
     }
   }, [cursorShift]);
 
-  //Зроби так, щоб слайдер прокручувався, лише коли currentIndex = центру
   useEffect(() => {
     const centralIndex = (visibleSlidesAmount - 1) / 2;
+    const slideWidth = sliderBlockSize + sliderViewportGap;
 
-    setTrackTranslate(totalShift);
-  }, [totalShift]);
+    if (
+      totalShift >= centralIndex * slideWidth &&
+      totalShift <= (vicinityArr.length - 1 - centralIndex) * slideWidth
+    ) {
+      setTrackTranslate(totalShift - centralIndex * slideWidth);
+    }
+  }, [cursorShift]);
+
+  useEffect(() => {
+    if (!isActive) {
+      const index = straighten(totalShift, 0);
+      const slideWidth = sliderBlockSize + sliderViewportGap;
+
+      const centralIndex = (visibleSlidesAmount - 1) / 2;
+
+      setTotalShift(index * slideWidth);
+
+      if (index < centralIndex) {
+        setTrackTranslate(0);
+      } else if (index > vicinityArr.length - 1 - centralIndex) {
+        setTrackTranslate(
+          slideWidth * (vicinityArr.length - visibleSlidesAmount),
+        );
+      } else {
+        setTrackTranslate((index - centralIndex) * slideWidth);
+      }
+    }
+  }, [isActive]);
+
+  useEffect(() => {
+    const index = straighten(totalShift, 0);
+
+    setCurrentIndex(index);
+  }, [cursorShift]);
 
   // useEffect(() => {
   //   const centralIndex = (visibleSlidesAmount - 1) / 2;
@@ -291,15 +327,27 @@ export const Slider: React.FC<SliderI<number>> = ({
       <div>
         <p>{cursorSpeed}</p>
         <p>{maxSpeed}</p>
-        {/* <p>center: {onePartSize * ((visibleSlidesAmount - 1) / 2)}</p> */}
-        {/* <p>Current vicinity: {currentVicinityIndex}</p> */}
-        {/* <p>Current: {currentIndex}</p> */}
-        {/* <p>Cursor shift: {cursorShift}</p> */}
       </div>
       <div
         className={slider_styles.sliderViewport}
         style={{
           width: `${width}%`,
+        }}
+        onPointerDown={(e) => {
+          cursorStartPosition.current = e.pageX;
+          setIsActive(true);
+        }}
+        onPointerMove={(e) => {
+          if (isActive) {
+            setCursorShift(cursorStartPosition.current - e.clientX);
+
+            cursorStartPosition.current = e.pageX;
+
+            setCursorSpeed(e.movementX);
+          }
+        }}
+        onPointerUp={() => {
+          setIsActive(false);
         }}
       >
         <div
@@ -308,22 +356,7 @@ export const Slider: React.FC<SliderI<number>> = ({
             transform: `translate(${-trackTranslate}px)`,
             height: `${sliderBlockSize}px`,
             gap: `${sliderViewportGap}px`,
-          }}
-          onPointerDown={(e) => {
-            cursorStartPosition.current = e.pageX;
-            setIsActive(true);
-          }}
-          onPointerMove={(e) => {
-            if (isActive) {
-              setCursorShift(cursorStartPosition.current - e.clientX);
-
-              cursorStartPosition.current = e.pageX;
-
-              setCursorSpeed(e.movementX);
-            }
-          }}
-          onPointerUp={() => {
-            setIsActive(false);
+            transitionDuration: `${!isActive ? "0.5s" : "0s"}`,
           }}
         >
           {vicinityArr.map((slide) => (
@@ -336,10 +369,11 @@ export const Slider: React.FC<SliderI<number>> = ({
               className={`${slider_styles.block}`}
             >
               <div
-                className={`${slider_styles.slide}`}
+                className={`${slider_styles.slide} ${currentIndex == slide.id && slider_styles.activeSlide}`}
                 style={{
                   width: `${sliderElementSize}px`,
                   height: `${sliderElementSize}px`,
+                  // borderColor: `${currentIndex == slide.id ? "red" : "transparent"}`,
                 }}
               >
                 <p>{slide.value}</p>
